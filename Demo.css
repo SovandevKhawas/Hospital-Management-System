@@ -1,0 +1,75 @@
+body {
+    background: rgb(204, 204, 204);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    padding: 2px;
+}
+
+h2 {
+    font-size: 22px;
+}
+
+table.item {
+    border-collapse: collapse;
+}
+
+table.item th {
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+    padding: 0;
+    text-align: left;
+}
+
+page {
+    background: white;
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 0.5cm;    
+    padding-right: .5em;
+    padding-left: .5em;
+}
+
+    page[size="A4"] {
+        width: 21cm;
+        height: 29.7cm;
+        /*margin: 27mm 16mm 27mm 16mm;*/
+    }
+  page[size="A4"][layout="landscape"] {
+    width: 29.7cm;
+    height: 21cm;  
+}
+
+/* page[size="A5"] {
+    width: 21cm;
+    height: 14.8cm;
+} */
+
+
+ul li {
+    padding-bottom: 5px;
+    font-size: 10px;
+}
+
+.fixed {
+    position: fixed;
+    width: 21cm;
+    top: 480px;
+}
+
+.left_area {
+    width: 60%;
+    float: left;
+}
+
+.right_area {
+    width: 40%;
+    float: left;
+}
+
+@media print {
+    body, page {
+      margin: 0;
+      box-shadow: 0;
+    }
+  }
+

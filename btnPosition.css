@@ -1,0 +1,11 @@
+﻿input#btnDisplaycol {
+    margin-top: 31px;
+}
+.table-responsive {
+    display: block;
+    width: 100% !important;
+    overflow-x: auto;
+}
+/*th {
+    font-size: 12px !important;
+}*/
