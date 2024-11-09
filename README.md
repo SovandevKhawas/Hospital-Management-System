@@ -38,3 +38,47 @@ This is a comprehensive hospital management software system developed for **Rama
 - **JavaScript**: For dynamic content and client-side functionality.
 - **SQL Server**: Relational database management system for storing all hospital data securely.
 
+  # Program.cs
+  using DataAccessLibrary.Common;
+
+var builder = WebApplication.CreateBuilder(args);
+{
+    builder.Services.AddControllersWithViews()
+        .AddJsonOptions(js => js.JsonSerializerOptions.PropertyNamingPolicy = null)
+        .AddNToastNotifyToastr(new NToastNotify.ToastrOptions()
+        {
+            ProgressBar = true
+        });
+
+    builder.Services.AddRazorPages();
+    builder.Services.AddHttpContextAccessor();
+    builder.Services.AddDistributedMemoryCache();
+
+    builder.Services.InjectDependency(builder.Configuration);
+}
+
+var app = builder.Build();
+{
+    app.UseNToastNotify();
+    // Configure the HTTP request pipeline.
+    app.UseDeveloperExceptionPage();
+
+    if (!app.Environment.IsDevelopment())
+    {
+        app.UseExceptionHandler("/Home/Error");
+    }
+
+    app.UseFileServer();
+    app.UseRouting();
+    app.UseAuthentication();
+    app.UseAuthorization();
+    app.UseSession();
+
+    app.MapAreaControllerRoute(
+        name: "default",
+        areaName: "Login",
+        pattern: "{area=Login}/{controller=Login}/{action=Start}/{id?}");
+
+    app.Run();
+}
+
