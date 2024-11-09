@@ -1,0 +1,671 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>SRI MA PHARMACY</title>
+
+    <!-- Fav  Icon Link -->
+    <link rel="shortcut icon" type="image/png" href="~/images/fav.png">
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="~/css/bootstrap.min.css">
+
+    <!-- themify icons CSS -->
+    <link rel="stylesheet" href="~/css/themify-icons/themify-icons.css">
+
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="~/css/jquery-ui.css" />
+    @*<link rel="stylesheet" href="/resources/demos/style.css">*@
+    <link rel="stylesheet" href="~/css/animate.css" />
+    <link rel="stylesheet" href="~/css/styles.css">
+    <link rel="stylesheet" href="~/css/green.css" id="style_theme">
+    <link rel="stylesheet" href="~/css/responsive.css">
+    <link rel="stylesheet" href="~/css/jquery-jvectormap.css">
+    <link rel="stylesheet" href="~/css/dataTables.bootstrap4.min.css">
+    <!--  Datatable css  -->
+    <link href="~/css/datatable/datatables.bootstrap4.min.css" rel="stylesheet" />
+    <link href="~/css/datatable/buttons.bootstrap4.min.css" rel="stylesheet" />
+    <!-- Search box in dropdown css-->
+    <link rel="stylesheet" href="~/css/chosen.min.css" />
+    <link rel="stylesheet" href="~/css/Select2Search/select2.min.css" />
+
+</head>
+
+<body>
+    @if (User!.Identity!.IsAuthenticated)
+    {
+        <div class="header">
+            <div class="top-brand">
+                <nav class="navbar navbar-default">
+                    <div class="navbar-header">
+                        <div class="sidebar-header">
+                            <a href="#"><img src="~/images/new_logo.png" class="logo" alt="logo"></a>
+                        </div>
+                    </div>
+                    <ul class="nav justify-content-end">
+
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="modal" data-target=".proclinic-modal-lg">
+                                <span class="ti-search"></span>
+                            </a>
+                            <div class="modal fade proclinic-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog modal-lorvens">
+                                    <div class="modal-content proclinic-box-shadow2">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Search Patient/Doctor:</h5>
+                                            <span class="ti ti-close" data-dismiss="modal" aria-label="Close">
+                                            </span>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form>
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" id="search-term"
+                                                        placeholder="Type text here">
+                                                    <button type="button" class="btn btn-lorvens proclinic-bg">
+                                                        <span class="ti ti-location-arrow"></span> Search
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                                aria-haspopup="true" aria-expanded="false">
+                                <span class="ti ti-announcement"></span>
+                            </a>
+                            <div class="dropdown-menu proclinic-box-shadow2 notifications animated flipInY">
+                                <h5>Notifications</h5>
+                                <a class="dropdown-item" href="#">
+                                    <span class="ti ti-wheelchair"></span> New Pharmacy Added
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <span class="ti ti-money"></span> Pharmacy payment done
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <span class="ti ti-time"></span> Patient Appointment booked
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <span class="ti ti-wheelchair"></span> New Pharmacy Added
+                                </a>
+                            </div>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                                aria-haspopup="true" aria-expanded="false">
+                                <span class="ti ti-user"></span>
+                            </a>
+                            <div class="dropdown-menu proclinic-box-shadow2 profile animated flipInY">
+                                <h5>Hello @User!.Claims!.FirstOrDefault()!.Value.ToString()</h5>
+                                <a class="dropdown-item"
+                                    href="@Url.Action("UserPrivilegeModule","UserPrivilege",new {area = "Login"})">
+                                    <span class="ti ti-settings"></span> User Privilege Module
+                                </a>
+                                <a class="dropdown-item" href="@Url.Action("ChangePassword","Login",new {area = "Login"})">
+                                    <span class="ti ti-settings"></span> Change Password
+                                </a>
+                                <a class="dropdown-item"
+                                    href="@Url.Action("DisplaySisterLoginStart","SisterLogin",new {area = "IPD" })">
+                                    <span class="ti ti-arrow-right"></span> Sister Login
+                                </a>
+                                <a class="dropdown-item" href="@Url.Action("Logout","Login",new {area = "Login" })">
+                                    <span class="ti ti-power-off"></span> Logout
+                                </a>
+                            </div>
+                        </li>
+
+                    </ul>
+                </nav>
+            </div>
+            <div class="menu-nav">
+                <nav class="navbar navbar-expand-lg proclinic-bg text-white">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                        <span class="ti-menu text-white"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav mx-auto">
+
+                            @* TODO:Master *@
+                            <li class="nav-item dropdown active">
+                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                                    aria-haspopup="true" aria-expanded="false"><span class="ti-bookmark-alt"></span>
+                                    Master</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("DisplayUnit","Unit",new {area = "Pharmacy" })">Unit Master</a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("DisplayAttributes","ProductAttributes",new {area = "Pharmacy" })">Item
+                                        Attributes</a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("DisplayLocation","Location",new {area = "Pharmacy" })">Location
+                                        List</a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("DisplayWarehouse","WareHouse",new {area = "Pharmacy" })">Warehouse
+                                        List</a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("DisplayAccgroup","Accgroup",new {area = "Pharmacy" })">Accounts
+                                        Group</a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("DiplayAccount","Account",new {area = "Pharmacy" })">General
+                                        Ledger</a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("DisplayParty","Party",new {area = "Pharmacy" })">Party Master</a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("DisplayCustomers","Customer",new {area = "Pharmacy" })">Customer
+                                        Master</a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("DisplayHSN","HSN",new {area = "Pharmacy" })">HSN Master</a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("DisplayItems","Items",new {area = "Pharmacy" })">Medicine
+                                        Master</a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("DisplayStockDetail","Stock",new {area = "Pharmacy" })">Stock
+                                        Query</a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("DisplayStockValuation","StockValuation",new {area = "Pharmacy" })">Stock
+                                        Valuation</a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("DisplayPartyWiseStock","PartyWiseStockReport",new {area = "Pharmacy" })">Party
+                                        Wise Stock Report (Purchase Bill)</a>
+                                    <a class="dropdown-item"
+                                       href="@Url.Action("DisplayPartyWiseStockReturn","PartyWiseStockReport",new {area = "Pharmacy" })">
+                                        Party
+                                        Wise Stock Report (Purchase Return)
+                                    </a>
+                                </div>
+                            </li>
+
+                            @* TODO:Purchase Transactions *@
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                                    aria-haspopup="true" aria-expanded="false"><span class="ti-support"></span> Purchase
+                                    Transactions</a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item"
+                                            href="@Url.Action("Display","PurchaseQuotation",new {area = "Pharmacy" })">Purchase
+                                            Quotations</a></li>
+                                    <li><a class="dropdown-item"
+                                            href="@Url.Action("Display","PurchaseIndent",new {area = "Pharmacy" })">Vendor
+                                            Selection</a></li>
+                                    <li><a class="dropdown-item"
+                                            href="@Url.Action("DisplayOrder","Order",new {area = "Pharmacy" })">Purchase
+                                            Order</a></li>
+                                    <li><a class="dropdown-item"
+                                            href="@Url.Action("DisplayPendingOrder","Order",new {area = "Pharmacy" })">Approve/Reject
+                                            Purchase Order</a></li>
+                                    <li><a class="dropdown-item"
+                                            href="@Url.Action("DisplayPB","PB",new {area = "Pharmacy" })">Purchase Bill</a>
+                                    </li>
+                                    <li><a class="dropdown-item"
+                                            href="@Url.Action("DisplayPurchasedReturn","PR",new {area = "Pharmacy" })">Purchase
+                                            Return</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item"
+                                            href="@Url.Action("DisplayMerging","Merging",new {area = "Pharmacy" })">
+                                            Merging Of Stocks
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item"
+                                            href="@Url.Action("DisplayDemerging","Demerging",new {area = "Pharmacy" })">Demerging
+                                            Of Stocks</a>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a class="dropdown-item dropdown-toggle" href="#">Reports</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item"
+                                                    href="@Url.Action("DisplayPendingOrderReport","Pending",new {area = "Pharmacy" })">Pending
+                                                    Purchase Order</a></li>
+                                            <li><a class="dropdown-item"
+                                                    href="@Url.Action("PurchaseRegisterReport","PurchaseRegister",new {area = "Pharmacy" })">Purchase
+                                                    Day Register</a></li>
+                                            <li><a class="dropdown-item"
+                                                    href="@Url.Action("ItemIndentReport","ItemIndentReport",new {area = "Pharmacy" })">Item
+                                                    Indent Report</a></li>
+                                            <li><a class="dropdown-item"
+                                                    href="@Url.Action("StockSummary","StockReportSummary",new {area = "Pharmacy" })">Stock
+                                                    Summary Report</a>
+                                            </li>
+
+                                            <li>
+                                                <a class="dropdown-item"
+                                                    href="@Url.Action("DisplayStockByQty","StockReport",new {area = "Pharmacy" })">
+                                                    Stock
+                                                    Report By Available Qty
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item"
+                                                    href="@Url.Action("DisplayStockReportMRPWise","StockReport",new {area = "Pharmacy" })">
+                                                    Stock Report By MRP
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item"
+                                                    href="@Url.Action("DisplayStockQtyVsReorderLevel","StockQtyVsReorderLevel",new {area = "Pharmacy" })">
+                                                    Stock Quantity Vs Reorder Level
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            @* TODO: Sales Transactions *@
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                                    aria-haspopup="true" aria-expanded="false">
+                                    <span class="ti-support"></span>Sales Transactions
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item"
+                                            href="@Url.Action("DisplaySB","SB",new {area = "Pharmacy" })">Sales
+                                            Bill(POS)</a></li>
+                                    <li><a class="dropdown-item"
+                                            href="@Url.Action("DisplaySR","SR",new {area = "Pharmacy" })">Patient Return</a>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item"
+                                                    href="@Url.Action("DisplaySalesReport","SalesReport",new {area = "Pharmacy" })">Sales
+                                                    Day Register</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a class="dropdown-item dropdown-toggle" href="#">Reports</a>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a class="dropdown-item"
+                                                    href="@Url.Action("SaleReport","DailySaleRegister",new {area = "Pharmacy" })">
+                                                    Daily Sales Register
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            @* TODO: Pharmacy Advance Deposits *@
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                                    aria-haspopup="true" aria-expanded="false"><span class="ti-receipt"></span> Pharmacy
+                                    Advance Deposits</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("DisplayAdvancePayment","FincbAdvance",new {area = "Pharmacy" })">Advance
+                                        Receipt Entry</a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("DisplayFINCB","FINCB",new {area = "Pharmacy" })">Payment Receipt
+                                        Entry</a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("DisplayFinCBOutside","FinCBOutside",new {area = "Pharmacy" })">
+                                        Receipt From Outside Customers
+                                    </a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("DiplayCollection","CashBank",new {area = "Pharmacy" })">Cash/Bank
+                                        Book</a>
+                                </div>
+                            </li>
+
+                            @* TODO: Pharmacy Collections And Accounts *@
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                                    aria-haspopup="true" aria-expanded="false"><span class="ti-briefcase"></span> Pharmacy
+                                    Collections And Accounts</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("DisplayCashCollection","CashCollection",new {area = "Pharmacy" })">Daily
+                                        Cash Inflow/Outflow</a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("DisplayAdjustedInflowOutflow","CashCollection",new {area = "Pharmacy" })">
+                                        Adjusted Cash Inflow/Outflow
+                                    </a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("CollectionReport","DailyCollectionReport",new {area = "Pharmacy" })">Daily
+                                        Collection(All)</a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("CollectionReportIPD","DailyCollectionReport",new {area = "Pharmacy" })">Daily
+                                        Collection(IPD)</a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("CollectionReportOPD","DailyCollectionReport",new {area = "Pharmacy" })">Daily
+                                        Collection(OPD)</a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("CollectionReportOthers","DailyCollectionReport",new {area = "Pharmacy" })">
+                                        Daily Collection(Others)
+                                    </a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("CollectionReportAdvance","DailyCollectionReport",new {area = "Pharmacy" })">Daily
+                                        Advance Collection</a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("DisplayTrialBalanceReport","TrialBalanceReport",new {area = "Pharmacy" })">
+                                        Trial Balance Report
+                                    </a>
+                                </div>
+                            </li>
+
+                            @* TODO: Patient Info *@
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                                    aria-haspopup="true" aria-expanded="false"><span class="ti-wheelchair"></span> Patient
+                                    Info</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("PatientBillingDetails","GSTReports",new {area = "Pharmacy" })">Pharmacy
+                                        Billing Details</a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("PharmacyBillingReport","PatientBillReport",new {area = "Pharmacy" })">Pharmacy
+                                        Billing Report</a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("MonthlyGSTIN","GSTReports",new {area = "Pharmacy" })">GST In
+                                        Report (Month-Wise)</a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("MonthlyGSTOUT","GSTReports",new {area = "Pharmacy" })">GST Out
+                                        Report (Month-Wise)
+                                    </a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("AdvanceGSTOUT","GSTReports",new {area = "Pharmacy" })">
+                                        GST Out Sales (Between Date Ranges)
+                                    </a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("GetGstOutputReturn","GSTOUTReturn",new {area = "Pharmacy" })">
+                                        GST Out Returns (Between Date Ranges)
+                                    </a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("B2CDisplaySaleReturn","GST_B2C",new {area = "Pharmacy" })">
+                                        GST OUT Report(B2C)
+                                    </a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("PatientItemReturn","PatientItemReturn",new {area = "Pharmacy" })">
+                                        Patient Item Return Report
+                                    </a>
+                                    <a class="dropdown-item"
+                                       href="@Url.Action("PharmacyDailyMedicineSupplyReport","PharmacyDailyMedicineSupply",new {area = "Pharmacy" })">
+                                        Pharmacy to IPD Daily Medicine Supply Report
+                                    </a>
+                                </div>
+                            </li>
+
+                            @* TODO: Pathology *@
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                                    aria-haspopup="true" aria-expanded="false"><span class="ti-package"></span>Pathology</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("Display","LabMaster",new {area = "Pathology" })">
+                                        Test Master
+                                    </a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("DisplayTestUnit","TestUnit",new {area = "Pathology" })">
+                                        Test Unit Master
+                                    </a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("DisplayCategory","Category",new {area = "Pathology" })">
+                                        Test Category Master
+                                    </a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("DisplayCommonTest","CommonTestMaster",new {area = "OPD" })">
+                                        common Test Master
+                                    </a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("GetPatientTestCountReport","PatientTestCountReport",new {area = "Pathology" })">
+                                        Patient Lab Test Count Report
+                                    </a>
+                                    <a class="dropdown-item"
+                                       href="@Url.Action("DisplayPathologyCategoryWiseReport","PathologyCategoryWiseReport",new {area = "Pathology" })">
+                                        Pathology Category Wise Report
+                                    </a>
+                                    <a class="dropdown-item"
+                                       href="@Url.Action("GetLabReport","LabReport",new {area = "Pathology" })">
+                                        Lab report
+                                    </a>
+                                    <a class="dropdown-item"
+                                       href="@Url.Action("GetLabReport","LabReport",new {area = "Pathology" })">
+                                        Lab report USG
+                                    </a>
+                                    <a class="dropdown-item dropdown-toggle" href="#">LSI</a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a class="dropdown-item"
+                                                href="@Url.Action("DisplayAnalyzerMaster","AnalyzerMaster",new {area = "Pathology" })">
+                                                Analyzer Master
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                            @* TODO: OPD *@
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                                    aria-haspopup="true" aria-expanded="false"><span class="ti-package"></span>OPD</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("DisplayDepartment","Department",new {area = "OPD" })">Department
+                                        Master</a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("DisplayDoctorUnit","DoctorUnit",new {area = "OPD" })">Doctor Unit
+                                        Master</a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("DisplayDoctorMaster","DoctorMaster",new {area = "OPD" })">Doctor
+                                        Master</a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("DisplayRegistrationPatient","Registration",new {area = "OPD" })">Patient
+                                        Registration</a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("DisplayCheckup","GeneralCheckup",new {area = "OPD" })">General
+                                        Checkup</a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("DisplayPrescription","Prescription",new {area = "OPD" })">Doctor
+                                        Prescription</a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("DisplayPrescription","Lab",new {area = "OPD" })">
+                                        Lab And Prescription
+                                    </a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("DisplayChargeType","ChargeType",new {area = "OPD" })">
+                                        Charge Type Master
+                                    </a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("DisplayFeeType","FeeType",new {area = "OPD" })">
+                                        Fee Type Master
+                                    </a>
+
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("DisplayOpdIpdFees","OpdIpdFeesMaster",new {area = "OPD" })">
+                                        OPD/IPD Fees Master
+                                    </a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("DisplayFeesEntry","FeesEntry",new {area = "OPD" })">
+                                        OPD Fees Entry
+                                    </a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("DisplayFeesEntryRenewal","FeesEntryRenewal",new {area = "OPD" })">
+                                        OPD Renewal Fees Entry
+                                    </a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("DisplayRegistrationCollectionEntry","RegistrationCollectionEntry",new {area = "OPD" })">
+                                        Cash Collection(Registrtion/Renewal)
+                                    </a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("DisplayLabFeesEntry","LabFeesEntry",new {area = "OPD" })">
+                                        Lab Test Fees Entry
+                                    </a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("DisplayPathologyCollectionEntry","PathologyCollectionEntry",new {area = "OPD" })">
+                                        Cash Collection(Lab/Pathology)
+                                    </a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("DisplayRegistrationFeesReport","OPDRegFeesReport",new {area = "OPD" })">
+                                        Patient Registration Fees Report
+                                    </a>
+                                    <a class="dropdown-item" asp-action="DisplayDoctorCheckUpSummary"
+                                        asp-controller="DoctorCheckUpReport" asp-area="OPD">
+                                        Doctor CheckUp Report
+                                    </a>
+                                    <a class="dropdown-item" asp-action="DisplayCountRegistrationFeeTypeWiseReport"
+                                        asp-controller="RegistrationFeeTypeWiseReport" asp-area="OPD">
+                                        Department/Fee Type Wise Registration Report
+                                    </a>
+                                    <a class="dropdown-item" asp-action="DisplayPatientType" asp-controller="PatientType"
+                                        asp-area="OPD">
+                                        Patient Type Master
+                                    </a>
+                                    <a class="dropdown-item" asp-action="DisplayOtherTestFeesEntry"
+                                        asp-controller="OtherTestFeesEntry" asp-area="OPD"> Other Test Fees Entry </a>
+
+                                    <a class="dropdown-item" asp-action="DisplayMiscellaneousFees"
+                                       asp-controller="MiscellaneousFees" asp-area="OPD">
+                                        Miscellaneous Fees Entry
+                                    </a>
+                                </div>
+                            </li>
+
+                            @* TODO: IPD *@
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                                    aria-haspopup="true" aria-expanded="false"><span class="ti-package"></span>IPD</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("DisplayPatientAdmission","PatientAdmission",new {area = "IPD" })">Patient
+                                        Admission</a>
+                                    <a class="dropdown-item"
+                                       href="@Url.Action("DisplayAdvanceCollection","IPDAdvanceCollection",new {area = "IPD" })">
+                                        IPD Advance Collection
+                                    </a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("AdmitedIPDPatientsRegister","IPDBillingInfo",new {area = "Pharmacy" })">Admitted
+                                        IPD Patients Register</a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("DischargePatientReport","IPDBillingInfo",new {area = "Pharmacy" })">Discharge
+                                        Patients Report</a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("DisplayWardMaster","WardMaster",new {area = "IPD" })">
+                                        Ward Master
+                                    </a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("DisplatyBedCabinTypes","BedCabinType",new {area = "IPD" })">
+                                        BedCabinType Master
+                                    </a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("DisplayBedMaster","BedMaster",new {area = "IPD" })">
+                                        Bed Master
+                                    </a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("DisplayCabinMaster","CabinMaster",new {area = "IPD" })">
+                                        Cabin Master
+                                    </a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("DisplayOTMaster","OTMaster",new {area = "IPD" })">
+                                        OT Master
+                                    </a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("DisplayOtType","OtType",new {area = "IPD" })">
+                                        OT Type Master
+                                    </a>
+                                    <a class="dropdown-item" href="@Url.Action("DisplaySaveO","SaveO",new {area = "IPD" })">
+                                        SaveO Master
+                                    </a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("DisplayCheckupParameter","IndoorCheckupParameters",new {area = "IPD" })">
+                                        Checkup Parameters Master
+                                    </a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("DisplayAnesthesiologistMaster","AnesthesiologistMaster",new {area = "IPD" })">
+                                        Anesthesiologist Master
+                                    </a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("DisplayWardSister","WardSister",new {area = "IPD" })">
+                                        Sister Master
+                                    </a>
+                                    <a class="dropdown-item" asp-action="DisplayAyaCharges" asp-controller="AyaChargeMaster" asp-area="IPD">
+                                        Aya Charges Master
+                                    </a>
+                                    <a class="dropdown-item" asp-action="DisplayAyaChargeCollection" asp-controller="AyaChargeCollection" asp-area="IPD">
+                                        Aya Charges Collection
+                                    </a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("DisplayIndoorPatient","IndoorCheckupAdvice",new {area = "IPD" })">
+                                        Display Indoor Patient Details
+                                    </a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("DisplayOTDetails","OTDetails",new {area = "IPD" })">
+                                        OT Details
+                                    </a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("DisplayIpdFeesEntry","IPDFeesEntry",new {area = "IPD" })">
+                                        IPD Fees Entry
+                                    </a>
+                                    <a class="dropdown-item"
+                                        href="@Url.Action("DisplayCollection","IPDFeesCollection",new {area = "IPD" })">
+                                        IPD Fees Collection
+                                    </a>
+                                    <a class="dropdown-item" asp-action="DisplayDischargeList" asp-controller="DischargeDetails" asp-area="IPD">
+                                        Patient Discharge Certificate 
+                                    </a>
+                                    <a class="dropdown-item" asp-action="DisplayAdminReport" asp-controller="AdminReport" asp-area="IPD">
+                                        Admin Report
+                                    </a>
+                                    
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    }
+    <div class="container-fluid" id="divContent">
+        @RenderBody()
+        <hr />
+        <footer class="footer fixed-bottom">
+            <div class="d-sm-flex justify-content-center">
+                <span class="text-center">Copyright © @DateTime.Now.Year <a href="#" target="_blank">Sri Maa Pharmacy</a>. All rights
+                    reserved.</span>
+            </div>
+        </footer>
+        <a id="back-to-top" href="#" class="back-to-top">
+            <span class="ti-angle-up"></span>
+        </a>
+    </div>
+
+    <script src="~/js/jquery-3.2.1.min.js"></script>
+    <script src="~/js/jquery-ui.js"></script>
+    <script src="~/js/modernizr.min.js"></script>
+    <script src="~/js/popper.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    @* <script src="~/js/custom-morris.js"></script> *@
+    <script src="~/js/custom.js"></script>
+    <script src="~/js/jquery.unobtrusive-ajax.min.js"></script>
+
+    <!--  Datatable js  -->
+    <script src="~/js/jquery.dataTables.min.js"></script>
+    <script src="~/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/js/datatable/datatables.buttons.min.js"></script>
+    <script src="~/js/datatable/buttons.bootstrap4.min.js"></script>
+    <script src="~/js/datatable/jszip.min.js"></script>
+    <script src="~/js/datatable/pdfmake.min.js"></script>
+    <script src="~/js/datatable/vfs_fonts.js"></script>
+    <script src="~/js/datatable/buttons.html5.min.js"></script>
+
+    @*/************************ jquery for searchable dropdown ************************************/*@
+    <script src="~/js/chosen.jquery.min.js"></script>
+    <!-- Select 2 Search -->
+    <script src="~/js/Select2Search/select2.min.js"></script>
+
+    <script src="~/js/Datatable/CommonDatatableScript.js"></script>
+    <script src="~/js/site.js"></script>
+    @await RenderSectionAsync("scripts", required: false)
+</body>
+
+</html>
