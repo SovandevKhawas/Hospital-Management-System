@@ -1,4 +1,3 @@
-# Hospital-Management-System
 # Ramakrishna Sarada Mission Hospital Software
 
 This is a comprehensive hospital management software system developed for **Ramakrishna Sarada Mission Hospital**. The system is designed to streamline the hospital's operations, improve efficiency, and manage patient data, billing, inventory, pathology reports, and more. It is developed using modern technologies such as C#, ASP.NET Core MVC, SQL Server, HTML, CSS, and JavaScript.
